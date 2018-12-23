@@ -24,8 +24,10 @@ public class Player extends GameObject {
 		x += velX;
 		y += velY;
 		
-		x = Game.clamp(x,  0,  Game.WIDTH - 38);
-		y = Game.clamp(y,  0,  Game.HEIGHT - 61);
+		x = Game.clamp(x,  0,  Game.WIDTH - 37);
+		y = Game.clamp(y,  0,  Game.HEIGHT - 59);
+		
+		handler.addObject(new Trail(x, y, ID.Trail, Color.BLUE, 32, 32, 0.04f, handler));
 		
 		collision();
 	}
@@ -40,18 +42,30 @@ public class Player extends GameObject {
 					HUD.HEALTH -= 0.25;
 				}
 				
-				if(HUD.HEALTH == 0) {
-					System.exit(1);
-				} 
-				
 			}
 			
+
+			if(tempObject.getId() == ID.OOFEnemy) {
+				if(getBounds().intersects(tempObject.getBounds())) {
+					HUD.HEALTH -= 10;
+				}
+				 
+			}
 			
+			if(tempObject.getId() == ID.EnemyBoss) {
+				if(getBounds().intersects(tempObject.getBounds())) {
+					HUD.HEALTH -= 125;
+				} 
+			}
+			
+			if(HUD.HEALTH == 0) {
+				HUD.setHealth(125);
+			}
 		}
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.WHITE);
+		g.setColor(Color.BLUE);
 		g.fillRect(x,  y,  32,  32);
 	}
 

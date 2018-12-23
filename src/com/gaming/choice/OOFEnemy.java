@@ -4,17 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class BasicEnemy extends GameObject{
+public class OOFEnemy extends GameObject {
 	
 	private Handler handler;
-
-	public BasicEnemy(int x, int y, ID id, Handler handler) {
+	
+	public OOFEnemy(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
 		
 		this.handler = handler;
 		
-		velX = 5;
-		velY = 5;
+		velX = 8;
+		velY = 8;
 		
 	}
 	
@@ -27,14 +27,14 @@ public class BasicEnemy extends GameObject{
 		y += velY;
 		
 		if(y <= 0 || y >= Game.HEIGHT - 32) velY *= -1;
-		if(x <= 0 || x >= Game.WIDTH - 16) velX *= -1;
+		if(x <= 0 || x >= Game.WIDTH - 32) velX *= -1;
 		
-		handler.addObject(new Trail(x, y, ID.Trail, Color.ORANGE, 16, 16, 0.04f, handler));
+		handler.addObject(new Trail(x, y, ID.Trail, Color.DARK_GRAY, 16, 16, 0.04f, handler));
 	}
 
 	
 	public void render(Graphics g) {
-		g.setColor(Color.ORANGE);
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(x, y, 16, 16);
 		
 	}

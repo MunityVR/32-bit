@@ -8,29 +8,45 @@ import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
 	
-	private static final long serialVersionUID = 5183120679815486514L;
+	private static final long serialVersionUID = -7198093446690910313L;
 	
-	public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
-	
+	public static final int WIDTH = 820, HEIGHT = WIDTH / 12 * 9;
 	
 	private Thread thread;
 	private boolean running = false;
 	private Random r;
 	private Handler handler;
 	private HUD hud;
+	private Spawn spawner;
+	private Menu menu;
+	
+	public enum STATE {
+		Menu,
+		Tutorial,
+		Game
+	};
+	
+	public STATE gameState = STATE.Menu;
 	
 	public Game() {
 		handler = new Handler();
+		menu = new Menu(this, handler);
+		this.addMouseListener(menu);
+		
 		this.addKeyListener(new KeyInput(handler));
-		new Window(WIDTH, HEIGHT, "WOB (World Of Blocks)", this);
+		new Window(WIDTH, HEIGHT, "32-bit (Created by LuckyCoder)", this);
 		
 		hud = new HUD();
-		
+		spawner = new Spawn(handler, hud);
 		r = new Random();
 		
-
-			handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32 , ID.Player, handler));
-			handler.addObject(new BasicEnemy(WIDTH/2-32, HEIGHT/2-32 , ID.BasicEnemy));
+		if(gameState == STATE.Game) {
+			
+			handler.addObject(new Player(WIDTH/2-35, HEIGHT/2-32 , ID.Player, handler));
+			handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+			
+		}
+		
 		}
 		
 
@@ -80,7 +96,13 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick(){
 		handler.tick();
-		hud.tick();
+		
+		if(gameState == STATE.Game) {
+			hud.tick();
+			spawner.tick();
+		}else if(gameState == STATE.Menu) {
+			menu.tick();
+		}
 	}
 	
 	private void render(){
@@ -96,7 +118,11 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.render(g);
 		
-		hud.render(g);
+		if(gameState == STATE.Game) {
+			hud.render(g);
+		} else if(gameState == STATE.Menu || gameState == STATE.Tutorial) {
+			menu.render(g);
+		}
 		
 		g.dispose();
 		bs.show();
