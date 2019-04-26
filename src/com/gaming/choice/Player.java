@@ -59,7 +59,7 @@ public class Player extends GameObject {
 			}
 			
 			if(HUD.HEALTH == 0) {
-				HUD.setHealth(125);
+				System.exit(0);
 			}
 		}
 	}
