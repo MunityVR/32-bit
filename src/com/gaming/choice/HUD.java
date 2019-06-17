@@ -47,6 +47,13 @@ public class HUD {
 	}
 	
 	public static void setHealth(int HEALTH) {
+		
 		HUD.HEALTH = HEALTH;
+	}
+	
+	public static void addHealth(int HEALTH) {
+		
+		HUD.HEALTH += HEALTH;
+		
 	}
 }

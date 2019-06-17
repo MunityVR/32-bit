@@ -5,6 +5,6 @@ public enum ID {
 	Player(),
 	BasicEnemy(),
 	Trail(),
-	EnemyBoss,
+	EnemyBoss(),
 	OOFEnemy();
 	}

@@ -33,7 +33,7 @@ public class KeyInput extends KeyAdapter{
 		}
 		
 		if(key == KeyEvent.VK_ESCAPE) System.exit(1);
-		if(key == KeyEvent.VK_H) HUD.setHealth(125);
+		if(key == KeyEvent.VK_H) HUD.addHealth(30); // If player press H, Player recover 30 health
 	}
 	
 	public void keyReleased(KeyEvent e){
